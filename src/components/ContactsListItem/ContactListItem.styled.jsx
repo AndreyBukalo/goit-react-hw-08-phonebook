@@ -34,6 +34,7 @@ export const DeleteIcon = styled(AiOutlineDelete)`
   height: 22px;
   scale: 1;
   transition: ease-in 0.5s;
+  cursor:pointer;
   &:hover {
     color: #e65252;
     scale: 1.1;

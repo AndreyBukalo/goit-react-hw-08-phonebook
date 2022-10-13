@@ -4,30 +4,36 @@ import {
   useCreateContactMutation,
   useFetchContactsQuery,
 } from 'redux/contactsSlice';
+import { addContact ,fetchContacts} from 'redux/operations';
 import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAllContacts } from 'redux/selectors';
 
 export const UserForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [createContact, { isUninitialized: isAdding }] =
-    useCreateContactMutation();
-  const { data: contacts } = useFetchContactsQuery();
+  // const [createContact, { isUninitialized: isAdding }] =
+  //   useCreateContactMutation();
+const contacts = useSelector(selectAllContacts)
 
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.target;
     const name = event.target.elements.name.value;
-    const number = event.target.elements.number.value.toString();
-    const avatar = event.target.elements.avatar.value;
+    const number = event.target.elements.number.value;
+    const contactItem = {
+      name,
+      number,
+    };
+   
     if (
       contacts?.find(cont => cont.name.toLowerCase() === name.toLowerCase())
     ) {
       return toast.error(`${name} is already in contacts`);
     }
-    if (!isAdding) {
-      return toast.error('Something goes wrong');
-    }
-    createContact({ name, number, avatar });
-    navigate('/', { replace: true });
+  
+    dispatch(addContact(contactItem));
+    navigate('/Contacts', { replace: true });
     form.reset();
     return toast.success(`${name} adding to your contacts...`);
   };
@@ -60,7 +66,7 @@ export const UserForm = () => {
           />
         </Label>
 
-        <Label htmlFor="avatar">
+        {/* <Label htmlFor="avatar">
           Avatar
           <Input
             placeholder="Please enter avatar URL (Not required)"
@@ -69,7 +75,7 @@ export const UserForm = () => {
             pattern="https://.*"
             size="30"
           />
-        </Label>
+        </Label> */}
 
         <Btn type="Submit">Add to Contacts</Btn>
       </FormStyle>

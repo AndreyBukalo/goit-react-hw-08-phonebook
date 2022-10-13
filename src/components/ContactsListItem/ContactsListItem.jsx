@@ -1,4 +1,4 @@
-import { useDeleteContactMutation } from 'redux/contactsSlice';
+
 
 import { Puff } from 'react-loader-spinner';
 import {
@@ -10,23 +10,30 @@ import {
   ItemName,
   ItemNumber,
 } from './ContactListItem.styled';
+import { deleteContact } from 'redux/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectLoading } from 'redux/selectors';
+import { ContactsReducer } from 'redux/contactsSlice';
 
-export const ContactListItem = ({ id, name, phone, avatar }) => {
-  const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
-  if (avatar === '') {
-    avatar =
-      'https://phonebook.sydney.edu.au/static/media/thumbnail-person.ac59bd47.svg';
-  }
+export const ContactListItem = ({ id, name, number }) => {
+  const dispatch = useDispatch();
+  const handleDelete = () => dispatch(deleteContact(id));
+
+
+  // const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
+  // if (avatar === '') {
+  //   avatar =
+  //     'https://phonebook.sydney.edu.au/static/media/thumbnail-person.ac59bd47.svg';
+  // }
   return (
     <ListItem key={id}>
       <UserBox>
-        <Avatar src={avatar} alt="Contact avatar" />
         <ItemName>{name}</ItemName>
       </UserBox>
-      <ItemNumber>{phone.slice(0, 15)}</ItemNumber>
-      <Btn type="button" onClick={() => deleteContact(id)}>
-        {isDeleting ? (
-          <Puff
+      <ItemNumber>{number}</ItemNumber>
+      <Btn type="button" onClick={ handleDelete}>
+        (
+        <Puff
             height="17"
             width="18"
             radisu={1}
@@ -34,8 +41,7 @@ export const ContactListItem = ({ id, name, phone, avatar }) => {
             visible={true}
           />
         ) : (
-          <DeleteIcon />
-        )}
+        <DeleteIcon />)
       </Btn>
     </ListItem>
   );

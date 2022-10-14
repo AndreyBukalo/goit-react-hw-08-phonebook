@@ -1,21 +1,15 @@
 import { ContactList } from 'components/Contacts/ContactsList';
-import { useFetchContactsQuery } from 'redux/contactsSlice';
 import { Filter } from 'components/Filter/Filter';
 import { BallTriangle } from 'react-loader-spinner';
 import { SpinerWrap } from 'components/PageStyled/ContactsPageStyle';
-import { fetchContacts } from 'redux/operations';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectAllContacts } from 'redux/selectors';
-import { useEffect } from 'react';
+import { useAuth } from 'components/hooks';
 
 export const ContactsPage = () => {
-// const { data: contacts} = fetchContact();
-
+  const { isLoading } = useAuth();
   return (
     <section>
       <Filter />
-      <ContactList />
-      {/* {isFetching ? (
+      {isLoading ? (
         <SpinerWrap>
           <BallTriangle
             height={250}
@@ -27,9 +21,8 @@ export const ContactsPage = () => {
           />
         </SpinerWrap>
       ) : (
-       
-      )} */}
+        <ContactList />
+      )}
     </section>
   );
 };
-// contacts = { contacts };

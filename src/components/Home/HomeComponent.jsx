@@ -1,11 +1,9 @@
-
-
-
-
+import { Header } from "./HomeComponentStyled";
 
 export const HomeComponent = () => {
-    return (
-        <>
-        <h1> Welcome! Please register or sign in to use phonebook</h1></>  
-    )
-}
+  return (
+    <>
+      <Header> Welcome! Please register or sign in to use phonebook</Header>
+    </>
+  );
+};

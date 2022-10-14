@@ -1,10 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { FormStyle, Label, Input, Btn, Header } from './Form.styled';
-import {
-  useCreateContactMutation,
-  useFetchContactsQuery,
-} from 'redux/contactsSlice';
-import { addContact ,fetchContacts} from 'redux/operations';
+import { addContact } from 'redux/operations';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAllContacts } from 'redux/selectors';
@@ -12,9 +8,8 @@ import { selectAllContacts } from 'redux/selectors';
 export const UserForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [createContact, { isUninitialized: isAdding }] =
-  //   useCreateContactMutation();
-const contacts = useSelector(selectAllContacts)
+
+  const contacts = useSelector(selectAllContacts);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -25,13 +20,13 @@ const contacts = useSelector(selectAllContacts)
       name,
       number,
     };
-   
+
     if (
       contacts?.find(cont => cont.name.toLowerCase() === name.toLowerCase())
     ) {
       return toast.error(`${name} is already in contacts`);
     }
-  
+
     dispatch(addContact(contactItem));
     navigate('/Contacts', { replace: true });
     form.reset();
@@ -65,17 +60,6 @@ const contacts = useSelector(selectAllContacts)
             required
           />
         </Label>
-
-        {/* <Label htmlFor="avatar">
-          Avatar
-          <Input
-            placeholder="Please enter avatar URL (Not required)"
-            type="url"
-            name="avatar"
-            pattern="https://.*"
-            size="30"
-          />
-        </Label> */}
 
         <Btn type="Submit">Add to Contacts</Btn>
       </FormStyle>

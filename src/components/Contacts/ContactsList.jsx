@@ -9,21 +9,21 @@ import { useEffect } from 'react';
 import { fetchContacts } from 'redux/operations';
 
 export const ContactList = () => {
-      const dispatch = useDispatch();
-      useEffect(() => {
-        dispatch(fetchContacts());
-      }, [dispatch]);
- 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   const filters = useSelector(getFilter);
   const contacts = useSelector(selectAllContacts);
-  
-      const filtredContacts = () => {
-     return contacts?.filter(contact =>
-       contact.name.toLowerCase().includes(filters.toLowerCase())
-     );
-   };
-   const visibleContacts = filtredContacts();
-console.log(contacts);
+
+  const filtredContacts = () => {
+    return contacts?.filter(contact =>
+      contact.name.toLowerCase().includes(filters.toLowerCase())
+    );
+  };
+  const visibleContacts = filtredContacts();
+  console.log(contacts);
   return (
     <>
       <Suspense fallback={<p>Loading...</p>}>

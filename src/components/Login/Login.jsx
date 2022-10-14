@@ -1,14 +1,9 @@
-import { useAuth } from 'components/hooks';
-import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { logIn } from 'redux/auth';
-
+import { FormStyle, Input, Label, Btn} from './LoginStyled';
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn } = useAuth();
-  const navigate = useNavigate();
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -18,24 +13,20 @@ export const LoginForm = () => {
         password: form.elements.password.value,
       })
     );
-    if (isLoggedIn) {
-      navigate('/Contacts', { replace: true });
-       form.reset();
-    }
-    else{  toast.error('User unknown');}
+    form.reset();
   };
 
   return (
-    <form  onSubmit={handleSubmit} autoComplete="off">
-      <label >
+    <FormStyle onSubmit={handleSubmit} autoComplete="off">
+      <Label>
         Email
-        <input type="email" name="email" />
-      </label>
-      <label >
+        <Input type="email" name="email" />
+      </Label>
+      <Label>
         Password
-        <input type="password" name="password" />
-      </label>
-      <button type="submit">Log In</button>
-    </form>
+        <Input type="password" name="password" />
+      </Label>
+      <Btn type="submit">Log In</Btn>
+    </FormStyle>
   );
 };

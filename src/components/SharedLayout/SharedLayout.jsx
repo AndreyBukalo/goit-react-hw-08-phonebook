@@ -1,11 +1,16 @@
-
 import { Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks';
 import { logOut } from 'redux/auth';
-import { Container, SideBar, LinkNav, LogoIcon } from './SharedLayoutStyled';
-
+import {
+  Container,
+  SideBar,
+  LinkNav,
+  LogoIcon,
+  UserName,
+  Btn,
+} from './SharedLayoutStyled';
 
 export const SharedLayout = () => {
   const dispatch = useDispatch();
@@ -14,7 +19,7 @@ export const SharedLayout = () => {
   const loggedOut = () => {
     dispatch(logOut());
     navigate('/', { replace: true });
-}
+  };
   return (
     <Container>
       <SideBar>
@@ -22,12 +27,12 @@ export const SharedLayout = () => {
         <nav>
           {isLoggedIn && (
             <>
-              <p>Welcom {user.name}</p>
+              <UserName>Welcom {user.name}</UserName>
               <LinkNav to="/Contacts">Contacts</LinkNav>
               <LinkNav to="/AddContactForm">Add Contact</LinkNav>
-              <button type="button" onClick={loggedOut}>
+              <Btn type="button" onClick={loggedOut}>
                 Log out
-              </button>
+              </Btn>
             </>
           )}
           {!isLoggedIn && (

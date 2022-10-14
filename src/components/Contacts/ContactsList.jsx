@@ -23,7 +23,6 @@ export const ContactList = () => {
     );
   };
   const visibleContacts = filtredContacts();
-  console.log(contacts);
   return (
     <>
       <Suspense fallback={<p>Loading...</p>}>
